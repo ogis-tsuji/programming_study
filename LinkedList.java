@@ -69,5 +69,50 @@ public class LinkedList {
 			throw new IndexOutOfBoundsException();
 		}
 	}
+	
+	// first番目 から tail番目までの要素取得（tailが要素数以上を指定している場合は、要素数を上限とする 
+	public Iterator gets(int first, int tail){
+		if(first<0 || tail<0){
+			throw new IllegalArgumentException("マイナス値");
+		}
+		if(first > tail){
+			throw new IllegalArgumentException("firstの方がtailよりも大木ボンド");
+		}
+		if(num<=tail){
+			tail = num-1;
+		}
+		Node firstNode = getNode(first);
+		return new IteratorImpl(firstNode, tail-first);
+	}
+	
+	private class IteratorImpl implements Iterator {
+		Node currentNode;
+		int num;
+		public IteratorImpl(Node firstNode, int num){
+			currentNode = firstNode;
+			this.num = num;	
+		}
+		public boolean hasNext(){
+			return num >= 0 ? true : false;
+			
+		}
+		public Object next(){
+			Object obj = null;
+			if(num >= 0){
+				obj = currentNode.getObj();
+				currentNode = currentNode.getNextNode();
+				num--;
+			}
+			return obj;
+		}
+
+	}
+	
 
 }
+
+interface Iterator{
+	boolean hasNext();
+	Object next();
+}
+

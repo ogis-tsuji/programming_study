@@ -30,6 +30,12 @@ public class LinkedListTest {
 
 		list.append("こ");
 		printLinkedList(list);
+		
+		Iterator itor = list.gets(2, 3);
+		while(itor.hasNext()){
+			String s = (String)itor.next();
+			System.out.println(s);
+		}
 
 	}
 	public static void printLinkedList(LinkedList list){
