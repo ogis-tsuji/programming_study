@@ -1,8 +1,9 @@
 package linkedlist;
 
-public class LinkedList {
+public class BothLinkedList{
 	private class Node {
 		private Object obj;
+		private Node prevNode = null;
 		private Node nextNode = null;
 		public Node(Object o){
 			obj = o;
@@ -13,31 +14,57 @@ public class LinkedList {
 		public Node getNextNode() {
 			return nextNode;
 		}
+		
+		public Node getPrevNode() {
+			return prevNode;
+		}
 		public void setNextNode(Node nextNode) {
 			this.nextNode = nextNode;
+		}
+		public void setPrevNode(Node prevNode) {
+			this.prevNode = prevNode;
 		}
 	};
 
 	private int num = 0;
-	private Node pseudoNode;
+	private Node firstPseudoNode;
+	private Node lastPseudoNode;
 	
-	public LinkedList(){
-		pseudoNode = new Node(null); 
+	public BothLinkedList(){
+		firstPseudoNode = new Node(null);
+		lastPseudoNode = new Node(null); 
+		firstPseudoNode.setNextNode(lastPseudoNode);
+		lastPseudoNode.setPrevNode(firstPseudoNode);
 	}
 	
 	public int size(){
 		return num;
 	}
-
-	public void append(Object obj){
+	public void appendLast(Object obj){
 		Node newNode = new Node(obj);
-		Node tailNode = getNode(num-1);
+		Node tailNode = lastPseudoNode.getPrevNode();
+		Node nextNode = lastPseudoNode;
 		tailNode.setNextNode(newNode);
+		newNode.setPrevNode(tailNode);
+		newNode.setNextNode(nextNode);
+		nextNode.setPrevNode(newNode);
+		num++;
+	}
+	public void appendFirst(Object obj){
+		Node newNode = new Node(obj);
+		Node firstNode = firstPseudoNode.getNextNode();
+		Node prevNode = firstPseudoNode;
+		firstNode.setPrevNode(newNode);
+		newNode.setNextNode(firstNode);
+		newNode.setPrevNode(prevNode);
+		prevNode.setNextNode(newNode);
 		num++;
 	}
 
+	
 	public Object get(int index){
 		checkBound(index);
+		// 早い方で検索
 		Node currentNode = getNode(index);
 		return currentNode.getObj();
 	}
@@ -46,27 +73,39 @@ public class LinkedList {
 		checkBound(index);
 		Node prevNode = getNode(index-1);
 		Node targetNode = prevNode.getNextNode();
-		prevNode.setNextNode(targetNode.getNextNode());
+		Node nextNode = targetNode.getNextNode();
+		prevNode.setNextNode(nextNode);
+		nextNode.setPrevNode(prevNode);
 		num--;
 	}
-
 	public void insert(int index, Object obj){
 		checkBound(index);
 		Node newNode = new Node(obj);
 		Node prevNode = getNode(index-1);
 		Node nextNode = prevNode.getNextNode();
 		newNode.setNextNode(nextNode);
+		nextNode.setPrevNode(newNode);
 		prevNode.setNextNode(newNode);
+		newNode.setPrevNode(prevNode);
 		num++;
 	}
-	
 	private Node getNode(int index){
-		Node currentNode = pseudoNode;
-		// 指定したノードまで進める
-		for(int i=0;i<=index;i++){
-			currentNode = currentNode.getNextNode();
-		}		
+		Node currentNode = null;
+		if(index < num/2){
+			currentNode = firstPseudoNode;
+			// 指定したノードまで進める
+			for(int i=0;i<=index;i++){
+				currentNode = currentNode.getNextNode();
+			}		
+		}else{
+			currentNode = lastPseudoNode;
+			// 指定したノードまで進める
+			for(int i=num;i>index;i--){
+				currentNode = currentNode.getPrevNode();
+			}		
+		}
 		return currentNode;
+
 	}
 	private void checkBound(int index){
 		if(num <=index || index < 0){
@@ -111,7 +150,6 @@ public class LinkedList {
 		}
 
 	}
+
 }
-
-
 
