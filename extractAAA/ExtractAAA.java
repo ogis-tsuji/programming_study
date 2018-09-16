@@ -1,29 +1,46 @@
 
 
 public class ExtractAAA {
+	private char dummyChar = '?';
+	private final int num;
+	
+	public ExtractAAA(){
+		num = 3;
+	}
+	public ExtractAAA(int num){
+		this.num = num;
+	}
 	public String convert(String s){
 		StringBuilder inputSB = new StringBuilder(s);
-		inputSB.append("??");
+		for(int i = 0; i<num; i++){
+			inputSB.append(dummyChar);
+		}
 		char[] input = inputSB.toString().toCharArray();
 
 		StringBuilder answer = new StringBuilder();
-		int i = 0;
-		while(i < input.length - 2){
+		for(int i = 0; i < input.length - num; i++){
 			if(Character.isUpperCase(input[i])){
-				if(input[i] == input[i+1]){
-					if( input[i] == input[i+2]){
-						answer.append("[").append(input[i]).append(input[i+1]).append(input[i+2]).append("]");
-						i += 3;
-						continue;
-					}else{
-						answer.append(input[i]).append(input[i+1]);
-						i += 2;
-						continue;
+				boolean isHit = true;
+				int j = 1;
+				for(; j < num; j++){
+					if(input[i] != input[i+j]){
+						isHit = false;
+						break;
 					}
 				}
+				if(isHit == true){
+					answer.append("[");
+				}
+				for(int k=0; k<j; k++){
+					answer.append(input[i+k]);
+				}
+				if(isHit == true){
+					answer.append("]");
+				}
+				i = i + j - 1;
+				continue;
 			}
 			answer.append(input[i]);
-			i++;
 		}
 		return answer.toString();
 	}
