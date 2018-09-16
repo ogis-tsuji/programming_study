@@ -50,16 +50,17 @@ public class BothLinkedListTest {
 		list.appendLast("こ");
 		printLinkedList(list);
 		
-//		Iterator itor = list.gets(2, 3);
-//		while(itor.hasNext()){
-//			String s = (String)itor.next();
-//			System.out.println(s);
-//		}
+		Iterator itor = list.gets(2, 3);
+		while(itor.hasNext()){
+			String s = (String)itor.next();
+			System.out.println(s);
+		}
 
 	}
 	public static void printLinkedList(BothLinkedList list){
-		for(int i=0;i<list.size();i++){
-			String s = (String)list.get(i);
+		Iterator itor = list.gets(0, list.size()-1);
+		while(itor.hasNext()){
+			String s = (String)itor.next();
 			System.out.println(s);
 		}
 		System.out.println("****");
