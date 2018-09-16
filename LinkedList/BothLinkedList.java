@@ -127,6 +127,11 @@ public class BothLinkedList{
 		Node firstNode = getNode(first);
 		return new IteratorImpl(firstNode, tail-first);
 	}
+
+	public Iterator iterator(){
+		return new IteratorImpl(firstPseudoNode.getNextNode(), num-1);
+	}
+
 	
 	private class IteratorImpl implements Iterator {
 		Node currentNode;
@@ -148,8 +153,17 @@ public class BothLinkedList{
 			}
 			return obj;
 		}
-
+		public Object remove(){
+			Object obj = null;
+			if(num >= 0){
+				Node prevNode = currentNode.getPrevNode();
+				Node prevPrevNode = prevNode.getPrevNode();
+				prevPrevNode.setNextNode(currentNode);
+				currentNode.setPrevNode(prevPrevNode);
+				obj = prevNode.getObj();
+			}
+			return obj;
+		}
 	}
-
 }
 

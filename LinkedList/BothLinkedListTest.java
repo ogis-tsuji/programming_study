@@ -50,19 +50,45 @@ public class BothLinkedListTest {
 		list.appendLast("こ");
 		printLinkedList(list);
 		
-		Iterator itor = list.gets(2, 3);
-		while(itor.hasNext()){
-			String s = (String)itor.next();
-			System.out.println(s);
-		}
+//		Iterator itor = list.gets(2, 3);
+//		while(itor.hasNext()){
+//			String s = (String)itor.next();
+//			System.out.println(s);
+//		}
+		
+	
+		BothLinkedList list3 = new BothLinkedList();
+		list3.appendLast("A");
+		list3.appendLast("B");
+		list3.appendLast("C");
+		list3.appendLast("D");
+		list3.appendLast("E");
+
+		printLinkedListForSpecialC(list3);
 
 	}
 	public static void printLinkedList(BothLinkedList list){
-		Iterator itor = list.gets(0, list.size()-1);
+		Iterator itor = list.iterator();
 		while(itor.hasNext()){
 			String s = (String)itor.next();
 			System.out.println(s);
 		}
 		System.out.println("****");
 	}
+
+	public static void printLinkedListForSpecialC(BothLinkedList list){
+		Iterator itor = list.iterator();
+		while(itor.hasNext()){
+			String s = (String)itor.next();
+			if( s.equals("C") ){
+				String removeS = (String)itor.remove();
+				System.out.println(removeS);
+				System.out.println("Delete");
+			}else{
+				System.out.println(s);
+			}
+		}
+		System.out.println("****");
+	}
+	
 }

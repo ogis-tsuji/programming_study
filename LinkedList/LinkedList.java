@@ -109,6 +109,9 @@ public class LinkedList {
 			}
 			return obj;
 		}
+		public Object remove(){
+			throw new UnsupportedOperationException();
+		}
 
 	}
 }
