@@ -160,6 +160,7 @@ public class BothLinkedList{
 				Node prevPrevNode = prevNode.getPrevNode();
 				prevPrevNode.setNextNode(currentNode);
 				currentNode.setPrevNode(prevPrevNode);
+				BothLinkedList.this.num--;
 				obj = prevNode.getObj();
 			}
 			return obj;

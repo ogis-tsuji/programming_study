@@ -65,6 +65,7 @@ public class BothLinkedListTest {
 		list3.appendLast("E");
 
 		printLinkedListForSpecialC(list3);
+		printLinkedList(list3);
 
 	}
 	public static void printLinkedList(BothLinkedList list){
